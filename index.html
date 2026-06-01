@@ -26,7 +26,7 @@
 </head>
 <body>
   <h2>Relé(k) állítása</h2>
-  <h4>Relé #1 - GPIO 25</h4><label class="switch"><input type="checkbox" onchange="toggleRelayCheckbox(this)" id="relay1"><span class="slider"></span></label>
+  <h4>Relé #1 - GPIO 25</h4><label class="switch"><input type="checkbox" id="relay1"><span class="slider"></span></label>
 
   <br>
   <br>
@@ -183,6 +183,12 @@
   await signInAnonymously(auth);
   
   const db = getDatabase(app);
+  
+  document.getElementById("relay1").onchange= () =>
+  {
+	let state = element.checked ? 1 : 0;
+	await set(ref(db, "devices/esp32_01/relay"), state);
+  };
   
   document.getElementById("change_color_red").onclick = () =>
   {
