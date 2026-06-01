@@ -186,7 +186,52 @@
   
   document.getElementById("change_color_red").onclick = () =>
   {
-	await set(ref(db, "devices/esp32_01/rgbled"), "255, 0, 0");
+	await set(ref(db, "devices/esp32_01/rgbAnimation"), null);
+	await set(ref(db, "devices/esp32_01/rgb"), "255, 0, 0");
+  };
+  document.getElementById("change_color_green").onclick = () =>
+  {
+	await set(ref(db, "devices/esp32_01/rgbAnimation"), null);
+	await set(ref(db, "devices/esp32_01/rgb"), "0, 255, 0");
+  };
+  document.getElementById("change_color_blue").onclick = () =>
+  {
+	await set(ref(db, "devices/esp32_01/rgbAnimation"), null);
+	await set(ref(db, "devices/esp32_01/rgb"), "0, 0, 255");
+  };
+  document.getElementById("change_color_yellow").onclick = () =>
+  {
+	await set(ref(db, "devices/esp32_01/rgbAnimation"), null);
+	await set(ref(db, "devices/esp32_01/rgb"), "255, 255, 0");
+  };
+  document.getElementById("change_color_cyan").onclick = () =>
+  {
+	await set(ref(db, "devices/esp32_01/rgbAnimation"), null);
+	await set(ref(db, "devices/esp32_01/rgb"), "0, 255, 255");
+  };
+  document.getElementById("change_color_magenta").onclick = () =>
+  {
+	await set(ref(db, "devices/esp32_01/rgbAnimation"), null);
+	await set(ref(db, "devices/esp32_01/rgb"), "255, 0, 255");
+  };
+  document.getElementById("change_color_white").onclick = () =>
+  {
+	await set(ref(db, "devices/esp32_01/rgbAnimation"), null);
+	await set(ref(db, "devices/esp32_01/rgb"), "255, 255, 255");
+  };
+  document.getElementById("change_color_off").onclick = () =>
+  {
+	await set(ref(db, "devices/esp32_01/rgbAnimation"), null);
+	await set(ref(db, "devices/esp32_01/rgb"), "0, 0, 0");
+  };
+  
+  document.getElementById("change_color_smooth").onclick = () =>
+  {
+	await set(ref(db, "devices/esp32_01/rgb"), "0, 0, 0");
+	
+	const fadeSpeedInput = document.getElementById('fadeSpeedInput');
+	let fadeSpeed = fadeSpeedInput.value;
+	await set(ref(db, "devices/esp32_01/rgbAnimation"), fadeSpeed);
   };
 </script>
 </body>
