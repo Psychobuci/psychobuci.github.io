@@ -155,5 +155,34 @@
       xhttp.send();
     }, 10000);
   </script>
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+  
+  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAaIWr0XBCBq0wmaNUtaTTJv6y8b6tRA1E",
+    authDomain: "psychobuci-esp32.firebaseapp.com",
+    databaseURL: "https://psychobuci-esp32-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "psychobuci-esp32",
+    storageBucket: "psychobuci-esp32.firebasestorage.app",
+    messagingSenderId: "700192701514",
+    appId: "1:700192701514:web:aeb04d8e67a72be9777ab3"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  
+  const db = getDatabase(app);
+  
+  document.getElementById("change_color_red").onclick = () =>
+  {
+	set(ref(db, "devices/esp32_01/rgbled"), "255, 0, 0");
+  };
+</script>
 </body>
 </html>
