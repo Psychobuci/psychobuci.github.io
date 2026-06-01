@@ -175,18 +175,18 @@
     messagingSenderId: "700192701514",
     appId: "1:700192701514:web:aeb04d8e67a72be9777ab3"
   };
-  
-  const auth = getAuth();
-  await signInAnonymously(auth);
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
+  
+  const auth = getAuth();
+  await signInAnonymously(auth);
   
   const db = getDatabase(app);
   
   document.getElementById("change_color_red").onclick = () =>
   {
-	set(ref(db, "devices/esp32_01/rgbled"), "255, 0, 0");
+	await set(ref(db, "devices/esp32_01/rgbled"), "255, 0, 0");
   };
 </script>
 </body>
