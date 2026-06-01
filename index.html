@@ -76,7 +76,7 @@
 
   <br>
   <br>
-  <button onclick="GoodNightESP();">Deep sleep</button>
+  <button id="deepSleepInput">Deep sleep</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
   <script>function toggleRelayCheckbox(element) {
@@ -244,6 +244,11 @@
 	const fadeSpeedInput = document.getElementById('fadeSpeedInput');
 	let fadeSpeed = fadeSpeedInput.value;
 	set(ref(db, "devices/esp32_01/rgbAnimation"), fadeSpeed);
+  };
+  
+  document.getElementById("deepSleepInput").onclick = () =>
+  {
+	set(ref(db, "devices/esp32_01/deepSleep"), true);
   };
 </script>
 </body>
