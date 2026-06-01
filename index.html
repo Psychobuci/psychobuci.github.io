@@ -190,6 +190,12 @@
 	await set(ref(db, "devices/esp32_01/relay"), state);
   };
   
+  document.getElementById("builtInBlueLedInput").onchange= () =>
+  {
+	let state = document.getElementById("builtInBlueLedInput").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
+	await set(ref(db, "devices/esp32_01/builtInBlueLed"), state);
+  };
+  
   document.getElementById("change_color_red").onclick = () =>
   {
 	await set(ref(db, "devices/esp32_01/rgbAnimation"), null);
