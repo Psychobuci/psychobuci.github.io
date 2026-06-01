@@ -156,6 +156,8 @@
     }, 10000);
   </script>
   <script type="module">
+  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+  
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
   // TODO: Add SDKs for Firebase products that you want to use
@@ -173,6 +175,9 @@
     messagingSenderId: "700192701514",
     appId: "1:700192701514:web:aeb04d8e67a72be9777ab3"
   };
+  
+  const auth = getAuth();
+  await signInAnonymously(auth);
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
