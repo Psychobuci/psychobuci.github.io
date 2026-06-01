@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>ESP32 Web Server</title>
+  <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <style>
+    html {font-family: Arial; display: inline-block; text-align: center;}
+    h2 {font-size: 2.5rem;}
+    p {font-size: 2.0rem;}
+    body {max-width: 600px; margin: 0px auto; padding-bottom: 25px;}
+    .switch {position: relative; display: inline-block; width: 95px; height: 46px} 
+    .switch input {display: none}
+    .slider {position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 24px}
+    .slider:before {position: absolute; content: ""; height: 40px; width: 40px; left: 8px; bottom: 3px; background-color: #fff; -webkit-transition: .2s; transition: .2s; border-radius: 58px}
+    input:checked+.slider {background-color: #2196F3}
+    input:checked+.slider:before {-webkit-transform: translateX(40px); -ms-transform: translateX(40px); transform: translateX(40px)}
+    .units { font-size: 1.2rem; }
+    .dht-labels{
+      font-size: 1.5rem;
+      vertical-align:middle;
+      padding-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Relé(k) állítása</h2>
+  <h4>Relé #1 - GPIO 25</h4><label class="switch"><input type="checkbox" onchange="toggleRelayCheckbox(this)" id="relay1"><span class="slider"></span></label>
+
+  <br>
+  <br>
+  <h2>DHT11 infók</h2>
+  <p>
+    <i class="fas fa-thermometer-half" style="color:#059e8a;"></i> 
+    <span class="dht-labels">Hőmérséklet</span> 
+    <span id="temperature">N/A</span>
+    <sup class="units">&deg;C</sup>
+  </p>
+  <p>
+    <i class="fas fa-tint" style="color:#00add6;"></i> 
+    <span class="dht-labels">Páratartalom</span>
+    <span id="humidity">N/A</span>
+    <sup class="units">&percnt;</sup>
+  </p>
+
+  <br>
+  <div class="container"><div class="row"><h2>RGB LED színválasztó</h2></div>
+  <input class="jscolor {onFineChange:'updatePickerInputValue(this)'}" id="colorPickerInput">
+
+  <br>
+  <br>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_red" role="button" style='background-color: red;' onclick="sendColor(255, 0, 0);">red</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_green" role="button" style='background-color: green;' onclick="sendColor(0, 255, 0);">green</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_blue" role="button" style='background-color: blue;' onclick="sendColor(0, 0, 255);">blue</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_yellow" role="button" style='background-color: yellow;' onclick="sendColor(255, 255, 0);">yellow</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_cyan" role="button" style='background-color: cyan;' onclick="sendColor(0, 255, 255);">cyan</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_magenta" role="button" style='background-color: magenta;' onclick="sendColor(255, 0, 255);">magenta</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_white" role="button" style='background-color: white;' onclick="sendColor(255, 255, 255);">white</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_off" role="button" onclick="sendColor(0,0,0);">off</a>
+  <br>
+  <br>
+  <label>Fade speed: <input id="fadeSpeedInput" value="20"></label>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_smooth" role="button" style='background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);' onclick="StartFadeAnimationOnESP();">Smooth</a>
+  </div>
+
+  <br>
+  <h2>OLED</h2>
+  <label>Felirat: <input id="oledTextInput" value="Egy sor 10"></label>
+  <label>Betűméret: <input id="oledFontSizeInput" value="2"></label>
+  <button onclick="SetOLEDTextOnESP();">Küldés</button>
+
+  <br>
+  <br>
+  <h4>Beépített kék LED</h4><label class="switch"><input type="checkbox" onchange="ToggleBuiltInLed(this)" id="builtInBlueLedInput"><span class="slider"></span></label>
+
+  <br>
+  <br>
+  <button onclick="GoodNightESP();">Deep sleep</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
+  <script>function toggleRelayCheckbox(element) {
+		var xhr = new XMLHttpRequest();
+		let state = element.checked ? "1" : "0";
+		xhr.open("GET", "/update?relay=" + element.id + "&state=" + state, true);
+		xhr.send();
+	}
+  </script>
+  <script>
+    function updatePickerInputValue(colorPicker) {
+		let r = Math.round(colorPicker.rgb[0]);
+		let g = Math.round(colorPicker.rgb[1]);
+		let b = Math.round(colorPicker.rgb[2]);
+
+		sendColor(r, g, b);
+    }
+    function sendColor(r, g, b) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "/update?rgb=" + r + "," + g + "," + b, true);
+		xhr.send();
+    }
+
+    function ToggleBuiltInLed(element) {
+		var xhr = new XMLHttpRequest();
+		let state = element.checked ? "1" : "0";
+		xhr.open("GET", "/update?builtInBlueLed=" + state, true);
+		xhr.send();
+    }
+  </script>
+  <script>
+	function StartFadeAnimationOnESP() {
+		const fadeSpeedInput = document.getElementById('fadeSpeedInput');
+		let fadeSpeed = fadeSpeedInput.value;
+		
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "/update?rgbAnimation=" + fadeSpeed, true);
+		xhr.send();
+    }
+    function SetOLEDTextOnESP() {
+		const oledTextInput = document.getElementById('oledTextInput');
+		let oledText = oledTextInput.value;
+		const oledFontSizeInput = document.getElementById('oledFontSizeInput');
+		let oledFontSize = oledFontSizeInput.value;
+		
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "/update?oledText=" + oledText + "&oledFontSize=" + oledFontSize, true);
+		xhr.send();
+    }
+    function GoodNightESP() {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "/update?deepSleep", true);
+		xhr.send();
+    }
+  </script>
+  <script>
+    setInterval(function ( ) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("temperature").innerHTML = this.responseText;
+        }
+      };
+      xhttp.open("GET", "/temperature", true);
+      xhttp.send();
+    }, 10000);
+
+    setInterval(function ( ) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("humidity").innerHTML = this.responseText;
+        }
+      };
+      xhttp.open("GET", "/humidity", true);
+      xhttp.send();
+    }, 10000);
+  </script>
+</body>
+</html>
