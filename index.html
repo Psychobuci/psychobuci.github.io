@@ -184,6 +184,17 @@
 
 	const db = getDatabase(app);
   
+	/*const deviceRef = ref(
+		db,
+		"devices/esp32_01"
+	);
+	
+	onValue(deviceRef, (snapshot) =>
+	{
+		const data = snapshot.val();
+		document.getElementById("temperature").value = data.temperature;
+	});*/
+  
 	const temperatureRef = ref(
 		db,
 		"devices/esp32_01/temperature"
@@ -192,7 +203,7 @@
 	onValue(temperatureRef, (snapshot) =>
 	{
 		const value = snapshot.val();
-		document.getElementById("temperature").value = value;
+		document.getElementById("temperature").textContent = value;
 	});
   
 	const humidityRef = ref(
@@ -203,7 +214,7 @@
 	onValue(humidityRef, (snapshot) =>
 	{
 		const value = snapshot.val();
-		document.getElementById("humidity").value = value;
+		document.getElementById("humidity").textContent = value;
 	});
   
 	document.getElementById("relay1").onchange= () =>
