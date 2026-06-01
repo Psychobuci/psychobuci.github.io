@@ -156,100 +156,122 @@
     }, 10000);*/
   </script>
   <script type="module">
-  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-  
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-  
-  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
+	import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAaIWr0XBCBq0wmaNUtaTTJv6y8b6tRA1E",
-    authDomain: "psychobuci-esp32.firebaseapp.com",
-    databaseURL: "https://psychobuci-esp32-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "psychobuci-esp32",
-    storageBucket: "psychobuci-esp32.firebasestorage.app",
-    messagingSenderId: "700192701514",
-    appId: "1:700192701514:web:aeb04d8e67a72be9777ab3"
-  };
+	// Import the functions you need from the SDKs you need
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+	// TODO: Add SDKs for Firebase products that you want to use
+	// https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+	import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js";
+
+	// Your web app's Firebase configuration
+	const firebaseConfig = {
+		apiKey: "AIzaSyAaIWr0XBCBq0wmaNUtaTTJv6y8b6tRA1E",
+		authDomain: "psychobuci-esp32.firebaseapp.com",
+		databaseURL: "https://psychobuci-esp32-default-rtdb.europe-west1.firebasedatabase.app",
+		projectId: "psychobuci-esp32",
+		storageBucket: "psychobuci-esp32.firebasestorage.app",
+		messagingSenderId: "700192701514",
+		appId: "1:700192701514:web:aeb04d8e67a72be9777ab3"
+	};
+
+	// Initialize Firebase
+	const app = initializeApp(firebaseConfig);
+
+	const auth = getAuth();
+	await signInAnonymously(auth);
+
+	const db = getDatabase(app);
   
-  const auth = getAuth();
-  await signInAnonymously(auth);
-  
-  const db = getDatabase(app);
-  
-  document.getElementById("relay1").onchange= () =>
-  {
-	let state = document.getElementById("relay1").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
-	set(ref(db, "devices/esp32_01/relay"), state);
-  };
-  
-  document.getElementById("builtInBlueLedInput").onchange= () =>
-  {
-	let state = document.getElementById("builtInBlueLedInput").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
-	set(ref(db, "devices/esp32_01/builtInBlueLed"), state);
-  };
-  
-  document.getElementById("change_color_red").onclick = () =>
-  {
-	set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
-	set(ref(db, "devices/esp32_01/rgb"), "255, 0, 0");
-  };
-  document.getElementById("change_color_green").onclick = () =>
-  {
-	set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
-	set(ref(db, "devices/esp32_01/rgb"), "0, 255, 0");
-  };
-  document.getElementById("change_color_blue").onclick = () =>
-  {
-	set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
-	set(ref(db, "devices/esp32_01/rgb"), "0, 0, 255");
-  };
-  document.getElementById("change_color_yellow").onclick = () =>
-  {
-	set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
-	set(ref(db, "devices/esp32_01/rgb"), "255, 255, 0");
-  };
-  document.getElementById("change_color_cyan").onclick = () =>
-  {
-	set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
-	set(ref(db, "devices/esp32_01/rgb"), "0, 255, 255");
-  };
-  document.getElementById("change_color_magenta").onclick = () =>
-  {
-	set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
-	set(ref(db, "devices/esp32_01/rgb"), "255, 0, 255");
-  };
-  document.getElementById("change_color_white").onclick = () =>
-  {
-	set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
-	set(ref(db, "devices/esp32_01/rgb"), "255, 255, 255");
-  };
-  document.getElementById("change_color_off").onclick = () =>
-  {
-	set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
-	set(ref(db, "devices/esp32_01/rgb"), "0, 0, 0");
-  };
-  
-  document.getElementById("change_color_smooth").onclick = () =>
-  {
-	set(ref(db, "devices/esp32_01/rgb"), "0, 0, 0");
+	const temperatureRef = ref(
+		db,
+		"devices/esp32_01/temperature"
+	);
 	
-	const fadeSpeedInput = document.getElementById('fadeSpeedInput');
-	let fadeSpeed = fadeSpeedInput.value;
-	set(ref(db, "devices/esp32_01/rgbAnimation"), fadeSpeed);
-  };
+	onValue(temperatureRef, (snapshot) =>
+	{
+		const value = snapshot.val();
+		document.getElementById("temperature").value = value;
+	});
   
-  document.getElementById("deepSleepInput").onclick = () =>
-  {
-	set(ref(db, "devices/esp32_01/deepSleep"), true);
-  };
+	const humidityRef = ref(
+		db,
+		"devices/esp32_01/humidity"
+	);
+	
+	onValue(humidityRef, (snapshot) =>
+	{
+		const value = snapshot.val();
+		document.getElementById("humidity").value = value;
+	});
+  
+	document.getElementById("relay1").onchange= () =>
+	{
+		let state = document.getElementById("relay1").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
+		set(ref(db, "devices/esp32_01/relay"), state);
+	};
+
+	document.getElementById("builtInBlueLedInput").onchange= () =>
+	{
+		let state = document.getElementById("builtInBlueLedInput").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
+		set(ref(db, "devices/esp32_01/builtInBlueLed"), state);
+	};
+
+	document.getElementById("change_color_red").onclick = () =>
+	{
+		set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
+		set(ref(db, "devices/esp32_01/rgb"), "255, 0, 0");
+	};
+	document.getElementById("change_color_green").onclick = () =>
+	{
+		set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
+		set(ref(db, "devices/esp32_01/rgb"), "0, 255, 0");
+	};
+	document.getElementById("change_color_blue").onclick = () =>
+	{
+		set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
+		set(ref(db, "devices/esp32_01/rgb"), "0, 0, 255");
+	};
+	document.getElementById("change_color_yellow").onclick = () =>
+	{
+		set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
+		set(ref(db, "devices/esp32_01/rgb"), "255, 255, 0");
+	};
+	document.getElementById("change_color_cyan").onclick = () =>
+	{
+		set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
+		set(ref(db, "devices/esp32_01/rgb"), "0, 255, 255");
+	};
+	document.getElementById("change_color_magenta").onclick = () =>
+	{
+		set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
+		set(ref(db, "devices/esp32_01/rgb"), "255, 0, 255");
+	};
+	document.getElementById("change_color_white").onclick = () =>
+	{
+		set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
+		set(ref(db, "devices/esp32_01/rgb"), "255, 255, 255");
+	};
+	document.getElementById("change_color_off").onclick = () =>
+	{
+		set(ref(db, "devices/esp32_01/rgbAnimation"), 0);
+		set(ref(db, "devices/esp32_01/rgb"), "0, 0, 0");
+	};
+
+	document.getElementById("change_color_smooth").onclick = () =>
+	{
+		set(ref(db, "devices/esp32_01/rgb"), "0, 0, 0");
+
+		const fadeSpeedInput = document.getElementById('fadeSpeedInput');
+		let fadeSpeed = fadeSpeedInput.value;
+		set(ref(db, "devices/esp32_01/rgbAnimation"), fadeSpeed);
+	};
+
+	document.getElementById("deepSleepInput").onclick = () =>
+	{
+		set(ref(db, "devices/esp32_01/deepSleep"), true);
+	};
 </script>
 </body>
 </html>
