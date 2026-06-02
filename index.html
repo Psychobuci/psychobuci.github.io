@@ -91,7 +91,10 @@
     function sendColor(r, g, b) {
 		update(ref(db, "devices/esp32_01/rgb"),
 		{
-			rgbValues: r + ", " + g + ", " + b,
+			//rgbValues: r + ", " + g + ", " + b,
+			r: r,
+			g: g,
+			b: b,
 			timestamp: Date.now()
 		});
     }
@@ -164,83 +167,34 @@
 		});
 	};
 
-	/*document.getElementById("colorPickerInput").onFineChange = () =>
-	{
-		let r = Math.round(colorPicker.rgb[0]);
-		let g = Math.round(colorPicker.rgb[1]);
-		let b = Math.round(colorPicker.rgb[2]);
-		
-		update(ref(db, "devices/esp32_01/rgb"),
-		{
-			rgbValues: "255, 0, 0",
-			timestamp: Date.now()
-		});
-	};*/
-
 	document.getElementById("change_color_red").onclick = () =>
 	{
-		/*update(ref(db, "devices/esp32_01/rgb"),
-		{
-			rgbValues: "255, 0, 0",
-			timestamp: Date.now()
-		});*/
 		sendColor(255, 0, 0);
 	};
 	document.getElementById("change_color_green").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"),
-		{
-			rgbValues: "0, 255, 0",
-			timestamp: Date.now()
-		});
+		sendColor(0, 255, 0);
 	};
 	document.getElementById("change_color_blue").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"),
-		{
-			rgbValues: "0, 0, 255",
-			timestamp: Date.now()
-		});
+		sendColor(0, 0, 255);
 	};
-	document.getElementById("change_color_yellow").onclick = () =>
-	{
-		update(ref(db, "devices/esp32_01/rgb"),
-		{
-			rgbValues: "255, 255, 0",
-			timestamp: Date.now()
-		});
-	};
+	document.getElementById("change_color_yellow").onclick = sendColor(255, 255, 0);
 	document.getElementById("change_color_cyan").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"),
-		{
-			rgbValues: "0, 255, 255",
-			timestamp: Date.now()
-		});
+		sendColor(0, 255, 255);
 	};
 	document.getElementById("change_color_magenta").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"),
-		{
-			rgbValues: "255, 0, 255",
-			timestamp: Date.now()
-		});
+		sendColor(255, 0, 255);
 	};
 	document.getElementById("change_color_white").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"),
-		{
-			rgbValues: "255, 255, 255",
-			timestamp: Date.now()
-		});
+		sendColor(255, 255, 255);
 	};
 	document.getElementById("change_color_off").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"),
-		{
-			rgbValues: "0, 0, 0",
-			timestamp: Date.now()
-		});
+		sendColor(0, 0, 0);
 	};
 
 	document.getElementById("change_color_smooth").onclick = () =>
