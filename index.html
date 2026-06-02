@@ -79,13 +79,6 @@
   <button id="deepSleepInput">Deep sleep</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
-  <script>function toggleRelayCheckbox(element) {
-		var xhr = new XMLHttpRequest();
-		let state = element.checked ? "1" : "0";
-		xhr.open("GET", "/update?relay=" + element.id + "&state=" + state, true);
-		xhr.send();
-	}
-  </script>
   <script>
     function updatePickerInputValue(colorPicker) {
 		let r = Math.round(colorPicker.rgb[0]);
@@ -126,34 +119,6 @@
 		xhr.open("GET", "/update?oledText=" + oledText + "&oledFontSize=" + oledFontSize, true);
 		xhr.send();
     }
-    function GoodNightESP() {
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "/update?deepSleep", true);
-		xhr.send();
-    }
-  </script>
-  <script>
-    /*setInterval(function ( ) {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("temperature").innerHTML = this.responseText;
-        }
-      };
-      xhttp.open("GET", "/temperature", true);
-      xhttp.send();
-    }, 10000);
-
-    setInterval(function ( ) {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("humidity").innerHTML = this.responseText;
-        }
-      };
-      xhttp.open("GET", "/humidity", true);
-      xhttp.send();
-    }, 10000);*/
   </script>
   <script type="module">
 	import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
@@ -196,35 +161,13 @@
 		document.getElementById("humidity").textContent = data.humidity;
 	});
   
-	/*const temperatureRef = ref(
-		db,
-		"devices/esp32_01/temperature"
-	);
-	
-	onValue(temperatureRef, (snapshot) =>
-	{
-		const value = snapshot.val();
-		document.getElementById("temperature").textContent = value;
-	});
-  
-	const humidityRef = ref(
-		db,
-		"devices/esp32_01/humidity"
-	);
-	
-	onValue(humidityRef, (snapshot) =>
-	{
-		const value = snapshot.val();
-		document.getElementById("humidity").textContent = value;
-	});*/
-  
-	document.getElementById("relay1").onchange= () =>
+	document.getElementById("relay1").onchange = () =>
 	{
 		let state = document.getElementById("relay1").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
 		set(ref(db, "devices/esp32_01/relay"), state);
 	};
 
-	document.getElementById("builtInBlueLedInput").onchange= () =>
+	document.getElementById("builtInBlueLedInput").onchange = () =>
 	{
 		let state = document.getElementById("builtInBlueLedInput").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
 		set(ref(db, "devices/esp32_01/builtInBlueLed"), state);
