@@ -123,6 +123,11 @@
 	await signInAnonymously(auth);
 
 	const db = getDatabase(app);
+	
+	const snapshot =
+    await get(ref(db, "websiteVersion"));
+
+	const CURRENT_VERSION = snapshot.val();
   
 	const deviceRef = ref(db, "devices/esp32_01");
 	
