@@ -166,7 +166,15 @@
 	document.getElementById("relay1").onchange = () =>
 	{
 		let state = document.getElementById("relay1").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
-		update(ref(db, "devices/esp32_01/relay"), state);
+		update(ref(db), "devices/esp32_01/relay": state);
+		/*update(
+			ref(db),
+			{
+				"devices/esp32_01/relay1": true,
+				"devices/esp32_02/relay1": true,
+				"devices/esp32_03/relay1": false
+			}
+		);*/
 	};
 
 	document.getElementById("builtInBlueLedInput").onchange = () =>
