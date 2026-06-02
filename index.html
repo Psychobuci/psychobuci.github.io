@@ -248,6 +248,11 @@
 	{
 		const fadeSpeedInput = document.getElementById('fadeSpeedInput');
 		let fadeSpeed = fadeSpeedInput.value;
+		/*update(ref(db, "devices/esp32_01/rgbAnimation"),
+		{
+			fadeSpeed: fadeSpeed,
+			needed: true
+		});*/
 		update(ref(db, "devices/esp32_01"),
 		{
 			rgbAnimation: fadeSpeed
