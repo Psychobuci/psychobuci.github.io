@@ -46,18 +46,19 @@
 
   <br>
   <div class="container"><div class="row"><h2>RGB LED színválasztó</h2></div>
+  <!--<input class="jscolor" id="colorPickerInput">-->
   <input class="jscolor {onFineChange:'updatePickerInputValue(this)'}" id="colorPickerInput">
 
   <br>
   <br>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_red" role="button" style='background-color: red;'>red</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_green" role="button" style='background-color: green;'>green</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_blue" role="button" style='background-color: blue;'>blue</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_yellow" role="button" style='background-color: yellow; color: black;'>yellow</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_cyan" role="button" style='background-color: cyan; color: black;'>cyan</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_magenta" role="button" style='background-color: magenta;'>magenta</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_white" role="button" style='background-color: white; color: black;'>white</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_off" role="button">off</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_red" role="button" style='background-color: red;'>Piros</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_green" role="button" style='background-color: green;'>Zöld</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_blue" role="button" style='background-color: blue;'>Kék</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_yellow" role="button" style='background-color: yellow; color: black;'>Sárga</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_cyan" role="button" style='background-color: cyan; color: black;'>Cián</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_magenta" role="button" style='background-color: magenta;'>Magenta</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_white" role="button" style='background-color: white; color: black;'>Fehér</a>
+  <a class="btn btn-secondary btn-lg" href="#" id="change_color_off" role="button">Kikapcs</a>
   <br>
   <br>
   <label>Fade speed: <input id="fadeSpeedInput" value="20"></label>
@@ -72,7 +73,7 @@
 
   <br>
   <br>
-  <h4>Beépített kék LED</h4><label class="switch"><input type="checkbox" onchange="ToggleBuiltInLed(this)" id="builtInBlueLedInput"><span class="slider"></span></label>
+  <h4>Beépített kék LED</h4><label class="switch"><input type="checkbox" id="builtInBlueLedInput"><span class="slider"></span></label>
 
   <br>
   <br>
@@ -88,36 +89,11 @@
 		sendColor(r, g, b);
     }
     function sendColor(r, g, b) {
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "/update?rgb=" + r + "," + g + "," + b, true);
-		xhr.send();
-    }
-
-    function ToggleBuiltInLed(element) {
-		var xhr = new XMLHttpRequest();
-		let state = element.checked ? "1" : "0";
-		xhr.open("GET", "/update?builtInBlueLed=" + state, true);
-		xhr.send();
-    }
-  </script>
-  <script>
-	function StartFadeAnimationOnESP() {
-		const fadeSpeedInput = document.getElementById('fadeSpeedInput');
-		let fadeSpeed = fadeSpeedInput.value;
-		
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "/update?rgbAnimation=" + fadeSpeed, true);
-		xhr.send();
-    }
-    function SetOLEDTextOnESP() {
-		const oledTextInput = document.getElementById('oledTextInput');
-		let oledText = oledTextInput.value;
-		const oledFontSizeInput = document.getElementById('oledFontSizeInput');
-		let oledFontSize = oledFontSizeInput.value;
-		
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "/update?oledText=" + oledText + "&oledFontSize=" + oledFontSize, true);
-		xhr.send();
+		update(ref(db, "devices/esp32_01/rgb"),
+		{
+			rgbValues: r + ", " + g + ", " + b,
+			timestamp: Date.now()
+		});
     }
   </script>
   <script type="module">
@@ -149,10 +125,7 @@
 
 	const db = getDatabase(app);
   
-	const deviceRef = ref(
-		db,
-		"devices/esp32_01"
-	);
+	const deviceRef = ref(db, "devices/esp32_01");
 	
 	// reseteljük a deepSleep értékét
 	update(ref(db, "devices/esp32_01"),
@@ -187,13 +160,27 @@
 		});
 	};
 
-	document.getElementById("change_color_red").onclick = () =>
+	/*document.getElementById("colorPickerInput").onFineChange = () =>
 	{
+		let r = Math.round(colorPicker.rgb[0]);
+		let g = Math.round(colorPicker.rgb[1]);
+		let b = Math.round(colorPicker.rgb[2]);
+		
 		update(ref(db, "devices/esp32_01/rgb"),
 		{
 			rgbValues: "255, 0, 0",
 			timestamp: Date.now()
 		});
+	};*/
+
+	document.getElementById("change_color_red").onclick = () =>
+	{
+		/*update(ref(db, "devices/esp32_01/rgb"),
+		{
+			rgbValues: "255, 0, 0",
+			timestamp: Date.now()
+		});*/
+		sendColor(255, 0, 0);
 	};
 	document.getElementById("change_color_green").onclick = () =>
 	{
