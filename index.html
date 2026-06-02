@@ -154,6 +154,12 @@
 		"devices/esp32_01"
 	);
 	
+	// reseteljük a deepSleep értékét
+	update(ref(db, "devices/esp32_01"),
+	{
+		deepSleep: false
+	});
+	
 	onValue(deviceRef, (snapshot) =>
 	{
 		const data = snapshot.val();
