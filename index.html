@@ -166,61 +166,86 @@
 	document.getElementById("relay1").onchange = () =>
 	{
 		let state = document.getElementById("relay1").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
-		update(ref(db), "devices/esp32_01/relay": state);
-		/*update(
-			ref(db),
-			{
-				"devices/esp32_01/relay1": true,
-				"devices/esp32_02/relay1": true,
-				"devices/esp32_03/relay1": false
-			}
-		);*/
+		update(ref(db, "devices/esp32_01"),
+		{
+			relay: state
+		});
 	};
 
 	document.getElementById("builtInBlueLedInput").onchange = () =>
 	{
 		let state = document.getElementById("builtInBlueLedInput").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
-		update(ref(db, "devices/esp32_01/builtInBlueLed"), state);
+		update(ref(db, "devices/esp32_01"),
+		{
+			builtInBlueLed: state
+		});
 	};
 
 	document.getElementById("change_color_red").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"), "255, 0, 0");
+		update(ref(db, "devices/esp32_01"),
+		{
+			rgb: "255, 0, 0"
+		});
 	};
 	document.getElementById("change_color_green").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"), "0, 255, 0");
+		update(ref(db, "devices/esp32_01"),
+		{
+			rgb: "0, 255, 0"
+		});
 	};
 	document.getElementById("change_color_blue").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"), "0, 0, 255");
+		update(ref(db, "devices/esp32_01"),
+		{
+			rgb: "0, 0, 255"
+		});
 	};
 	document.getElementById("change_color_yellow").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"), "255, 255, 0");
+		update(ref(db, "devices/esp32_01"),
+		{
+			rgb: "255, 255, 0"
+		});
 	};
 	document.getElementById("change_color_cyan").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"), "0, 255, 255");
+		update(ref(db, "devices/esp32_01"),
+		{
+			rgb: "0, 255, 255"
+		});
 	};
 	document.getElementById("change_color_magenta").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"), "255, 0, 255");
+		update(ref(db, "devices/esp32_01"),
+		{
+			rgb: "255, 0, 255"
+		});
 	};
 	document.getElementById("change_color_white").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"), "255, 255, 255");
+		update(ref(db, "devices/esp32_01"),
+		{
+			rgb: "255, 255, 255"
+		});
 	};
 	document.getElementById("change_color_off").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/rgb"), "0, 0, 0");
+		update(ref(db, "devices/esp32_01"),
+		{
+			rgb: "0, 0, 0"
+		});
 	};
 
 	document.getElementById("change_color_smooth").onclick = () =>
 	{
 		const fadeSpeedInput = document.getElementById('fadeSpeedInput');
 		let fadeSpeed = fadeSpeedInput.value;
-		update(ref(db, "devices/esp32_01/rgbAnimation"), fadeSpeed);
+		update(ref(db, "devices/esp32_01"),
+		{
+			rgbAnimation: fadeSpeed
+		});
 	};
 	
 	document.getElementById("setOledTextButton").onclick = () =>
@@ -242,7 +267,10 @@
 
 	document.getElementById("deepSleepInput").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01/deepSleep"), true);
+		update(ref(db, "devices/esp32_01"),
+		{
+			deepSleep: true
+		});
 	};
 </script>
 </body>
