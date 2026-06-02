@@ -149,18 +149,18 @@
 		document.getElementById("builtInBlueLedInput").checked = data.builtInBlueLed;
 	});
   
-	document.getElementById("relay1").onchange = () =>
+	document.getElementById("relay1").onchange = (event) =>
 	{
-		let state = document.getElementById("relay1").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
+		let state = event.target.checked;
 		update(ref(db, "devices/esp32_01"),
 		{
 			relay: state
 		});
 	};
 
-	document.getElementById("builtInBlueLedInput").onchange = () =>
+	document.getElementById("builtInBlueLedInput").onchange = (event) =>
 	{
-		let state = document.getElementById("builtInBlueLedInput").checked ? 1 : 0; // TODO: lehet itt olyat, hogy this?
+		let state = event.target.checked;
 		update(ref(db, "devices/esp32_01"),
 		{
 			builtInBlueLed: state
@@ -179,7 +179,10 @@
 	{
 		sendColor(0, 0, 255);
 	};
-	document.getElementById("change_color_yellow").onclick = sendColor(255, 255, 0);
+	document.getElementById("change_color_yellow").onclick = () =>
+	{
+		sendColor(255, 255, 0);
+	};
 	document.getElementById("change_color_cyan").onclick = () =>
 	{
 		sendColor(0, 255, 255);
