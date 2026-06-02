@@ -279,6 +279,21 @@
 			deepSleep: true
 		});
 	};
+	
+	onValue(ref(db, "websiteVersion"),
+    (snapshot) =>
+    {
+        const latestVersion = snapshot.val();
+
+        if (latestVersion > CURRENT_VERSION)
+        {
+            if (confirm("Új verzió érhető el. Újratöltöd az oldalt?"))
+			{
+				location.reload(true);
+			}
+        }
+    }
+);
 </script>
 </body>
 </html>
