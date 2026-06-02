@@ -191,69 +191,80 @@
 	{
 		update(ref(db, "devices/esp32_01"),
 		{
-			rgb: "255, 0, 0"
+			rgb: "255, 0, 0",
+			timestamp: Date.now()
 		});
 	};
 	document.getElementById("change_color_green").onclick = () =>
 	{
 		update(ref(db, "devices/esp32_01"),
 		{
-			rgb: "0, 255, 0"
+			rgb: "0, 255, 0",
+			timestamp: Date.now()
 		});
 	};
 	document.getElementById("change_color_blue").onclick = () =>
 	{
 		update(ref(db, "devices/esp32_01"),
 		{
-			rgb: "0, 0, 255"
+			rgb: "0, 0, 255",
+			timestamp: Date.now()
 		});
 	};
 	document.getElementById("change_color_yellow").onclick = () =>
 	{
 		update(ref(db, "devices/esp32_01"),
 		{
-			rgb: "255, 255, 0"
+			rgb: "255, 255, 0",
+			timestamp: Date.now()
 		});
 	};
 	document.getElementById("change_color_cyan").onclick = () =>
 	{
 		update(ref(db, "devices/esp32_01"),
 		{
-			rgb: "0, 255, 255"
+			rgb: "0, 255, 255",
+			timestamp: Date.now()
 		});
 	};
 	document.getElementById("change_color_magenta").onclick = () =>
 	{
 		update(ref(db, "devices/esp32_01"),
 		{
-			rgb: "255, 0, 255"
+			rgb: "255, 0, 255",
+			timestamp: Date.now()
 		});
 	};
 	document.getElementById("change_color_white").onclick = () =>
 	{
 		update(ref(db, "devices/esp32_01"),
 		{
-			rgb: "255, 255, 255"
+			rgb: "255, 255, 255",
+			timestamp: Date.now()
 		});
 	};
 	document.getElementById("change_color_off").onclick = () =>
 	{
-		set(ref(db, "devices/esp32_01/rgb"), "0, 0, 0"); // direkt set, hogy mindenképp kapja meg az ESP32
+		update(ref(db, "devices/esp32_01"),
+		{
+			rgb: "0, 0, 0",
+			timestamp: Date.now()
+		});
 	};
 
 	document.getElementById("change_color_smooth").onclick = () =>
 	{
 		const fadeSpeedInput = document.getElementById('fadeSpeedInput');
 		let fadeSpeed = fadeSpeedInput.value;
-		/*update(ref(db, "devices/esp32_01/rgbAnimation"),
+		update(ref(db, "devices/esp32_01/rgbAnimation"),
 		{
 			fadeSpeed: fadeSpeed,
-			needed: true
-		});*/
-		update(ref(db, "devices/esp32_01"),
+			timestamp: Date.now()
+		});
+		/*update(ref(db, "devices/esp32_01"),
 		{
 			rgbAnimation: fadeSpeed
-		});
+		});*/
 	};
 	
 	document.getElementById("setOledTextButton").onclick = () =>
