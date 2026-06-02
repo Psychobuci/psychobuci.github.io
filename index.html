@@ -238,10 +238,7 @@
 	};
 	document.getElementById("change_color_off").onclick = () =>
 	{
-		update(ref(db, "devices/esp32_01"),
-		{
-			rgb: "0, 0, 0"
-		});
+		set(ref(db, "devices/esp32_01/rgb"), "0, 0, 0"); // direkt set, hogy mindenképp kapja meg az ESP32
 	};
 
 	document.getElementById("change_color_smooth").onclick = () =>
