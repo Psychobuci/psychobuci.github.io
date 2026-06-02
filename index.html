@@ -284,6 +284,10 @@
 
 	document.getElementById("deepSleepInput").onclick = () =>
 	{
+		if (!confirm("Biztos, hogy elaltatod az eszközt?"))
+		{
+			return;
+		}
 		update(ref(db, "devices/esp32_01"),
 		{
 			deepSleep: true
