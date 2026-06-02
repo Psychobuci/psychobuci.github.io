@@ -164,7 +164,7 @@
 	{
 		const data = snapshot.val();
 		document.getElementById("relay1").checked = data.relay;
-		document.getElementById("temperature").textContent = data.temperature;
+		document.getElementById("temperature").textContent = data.temperature - 1.5; // másik hőmérő által úgy látszik, hogy túl sokat mér
 		document.getElementById("humidity").textContent = data.humidity;
 		document.getElementById("builtInBlueLedInput").checked = data.builtInBlueLed;
 	});
