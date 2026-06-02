@@ -16,7 +16,7 @@
     .slider:before {position: absolute; content: ""; height: 40px; width: 40px; left: 8px; bottom: 3px; background-color: #fff; -webkit-transition: .2s; transition: .2s; border-radius: 58px}
     input:checked+.slider {background-color: #2196F3}
     input:checked+.slider:before {-webkit-transform: translateX(40px); -ms-transform: translateX(40px); transform: translateX(40px)}
-    .units { font-size: 1.2rem; }
+    .units { font-size: 2.0rem; }
     .dht-labels{
       font-size: 1.5rem;
       vertical-align:middle;
@@ -35,13 +35,13 @@
     <i class="fas fa-thermometer-half" style="color:#059e8a;"></i> 
     <span class="dht-labels">Hőmérséklet</span> 
     <span id="temperature">N/A</span>
-    <sup class="units">&deg;C</sup>
+    <span class="units">&deg;C</span>
   </p>
   <p>
     <i class="fas fa-tint" style="color:#00add6;"></i> 
     <span class="dht-labels">Páratartalom</span>
     <span id="humidity">N/A</span>
-    <sup class="units">&percnt;</sup>
+    <span class="units">&percnt;</span>
   </p>
 
   <br>
