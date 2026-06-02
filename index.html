@@ -157,8 +157,10 @@
 	onValue(deviceRef, (snapshot) =>
 	{
 		const data = snapshot.val();
+		document.getElementById("relay1").checked = data.relay;
 		document.getElementById("temperature").textContent = data.temperature;
 		document.getElementById("humidity").textContent = data.humidity;
+		document.getElementById("builtInBlueLedInput").checked = data.builtInBlueLed;
 	});
   
 	document.getElementById("relay1").onchange = () =>
