@@ -274,13 +274,11 @@
 		const oledFontSizeInput = document.getElementById('oledFontSizeInput');
 		let oledFontSize = oledFontSizeInput.value;
 		
-		//var xhr = new XMLHttpRequest();
-		//xhr.open("GET", "/update?oledText=" + oledText + "&oledFontSize=" + oledFontSize, true);
-		
 		update(ref(db, "devices/esp32_01/oled"),
 		{
 			text: oledText,
-			fontSize: oledFontSize
+			fontSize: oledFontSize,
+			timestamp: Date.now()
 		});
 	};
 
