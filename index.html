@@ -80,7 +80,7 @@
   <button id="deepSleepInput">Deep sleep</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
-  <script>
+  <script type="module">
     function updatePickerInputValue(colorPicker) {
 		let r = Math.round(colorPicker.rgb[0]);
 		let g = Math.round(colorPicker.rgb[1]);
@@ -95,8 +95,7 @@
 			timestamp: Date.now()
 		});
     }
-  </script>
-  <script type="module">
+	
 	import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 	// Import the functions you need from the SDKs you need
