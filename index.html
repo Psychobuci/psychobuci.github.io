@@ -223,7 +223,7 @@
 		
 		db = getDatabase(app);
 	
-		const snapshot = await get(ref(db, "websiteVersion"));
+		const snapshot = get(ref(db, "websiteVersion"));
 
 		const CURRENT_VERSION = snapshot.val();
 	  
