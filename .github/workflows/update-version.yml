@@ -25,7 +25,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v4 # Ez letölti a repository tartalmát a runnerre
+            - name: Setup Node.js
+              uses: actions/setup-node@v4 # Node.js környezet beállítása
+              with:
+                  node-version: '20'
             - name: Setup Pages
               uses: actions/configure-pages@v4
             - name: Upload artifact
