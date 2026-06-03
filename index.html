@@ -204,7 +204,8 @@
 	
 	onAuthStateChanged(auth, user =>
 	{
-		if (auth.name != "[DEFAULT]")
+		//if (auth.name != "[DEFAULT]")
+		if (auth.currentUser.accessToken.length > 0)
 		{
 			//db = SetPageAfterLogin();
 			SetPageAfterLogin();
