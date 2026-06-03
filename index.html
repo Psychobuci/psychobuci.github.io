@@ -225,7 +225,8 @@
 	
 		const snapshot = get(ref(db, "websiteVersion"));
 
-		const CURRENT_VERSION = snapshot.val();
+		//const CURRENT_VERSION = snapshot.val();
+		const CURRENT_VERSION = snapshot;
 	  
 		const deviceRef = ref(db, "devices/esp32_01");
 		
