@@ -222,11 +222,12 @@
 		
 		db = getDatabase(app);
 	
-		const CURRENT_VERSION = async key => {
-	      let ref = await get(ref(db, "websiteVersion"));
-	      const data = ref.val();
-	      return data;
-	    };
+		let CURRENT_VERSION = null;
+		
+		(async () => {
+			let snapshot = await get(ref(db, "websiteVersion"));
+			CURRENT_VERSION = snapshot.val();
+		})();
 	  
 		const deviceRef = ref(db, "devices/esp32_01");
 		
