@@ -328,19 +328,30 @@
 			});
 		};
 		
-		onValue(ref(db, "websiteVersion"),
-		(snapshot) =>
-		{
+		onValue(ref(db, "websiteVersion"), (snapshot) => {
 			const latestVersion = snapshot.val();
-			if (CURRENT_VERSION == null)
-			{
+			if (CURRENT_VERSION == null) {
 				CURRENT_VERSION = latestVersion;
 			}
-			else if (latestVersion > CURRENT_VERSION)
-			{
-				if (confirm("Új verzió érhető el. Újratöltöd az oldalt?"))
-				{
+			else if (latestVersion > CURRENT_VERSION) {
+				if (confirm("Új verzió érhető el. Újratöltöd az oldalt?")) {
 					location.reload(true);
+				}
+			}
+		});
+		
+		const connectedRef = ref(db, ".info/connected");
+
+		onValue(connectedRef, async (snap) => {
+			if (snap.val() === true) {
+				// A kapcsolat (újra)él! Biztonság kedvéért ellenőrizzük a verziót.
+				const snapshot = await get(ref(db, "websiteVersion"));
+				const latestVersion = snapshot.val();
+				
+				if (CURRENT_VERSION !== null && latestVersion > CURRENT_VERSION) {
+					if (confirm("Új verzió érhető el. Újratöltöd az oldalt?")) {
+						location.reload(true);
+					}
 				}
 			}
 		});
