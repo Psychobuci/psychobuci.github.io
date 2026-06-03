@@ -25,60 +25,107 @@
   </style>
 </head>
 <body>
-  <h2>Relé(k) állítása</h2>
-  <h4>Relé #1 - GPIO 25</h4><label class="switch"><input type="checkbox" id="relay1"><span class="slider"></span></label>
+    <button id="openLoginModalButton" onclick="document.getElementById('id01').style.display='block'" 
+            style="width:auto;">Login</button>
 
-  <br>
-  <br>
-  <h2>DHT11 infók</h2>
-  <p>
-    <i class="fas fa-thermometer-half" style="color:#059e8a;"></i> 
-    <span class="dht-labels">Hőmérséklet</span> 
-    <span id="temperature">N/A</span>
-    <span class="units">&deg;C</span>
-  </p>
-  <p>
-    <i class="fas fa-tint" style="color:#00add6;"></i> 
-    <span class="dht-labels">Páratartalom</span>
-    <span id="humidity">N/A</span>
-    <span class="units">&percnt;</span>
-  </p>
+    <div id="id01" class="modal">
+        <form class="modal-content animate" action="/action_page.php">
+            <div class="imgcontainer">
+                <span onclick=
+                      "document.getElementById('id01').style.display='none'" 
+                      class="close"
+                      title="Close Modal">&times;</span>
+            </div>
 
-  <br>
-  <div class="container"><div class="row"><h2>RGB LED színválasztó</h2></div>
-  <!--<input class="jscolor" id="colorPickerInput">-->
-  <input class="jscolor {onFineChange:'updatePickerInputValue(this)'}" id="colorPickerInput">
+            <div class="container">
+                <label><b>Email</b></label>
+                <input type="text" 
+                       placeholder="Enter email" 
+                       name="email" required>
 
-  <br>
-  <br>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_red" role="button" style='background-color: red;'>Piros</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_green" role="button" style='background-color: green;'>Zöld</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_blue" role="button" style='background-color: blue;'>Kék</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_yellow" role="button" style='background-color: yellow; color: black;'>Sárga</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_cyan" role="button" style='background-color: cyan; color: black;'>Cián</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_magenta" role="button" style='background-color: magenta;'>Magenta</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_white" role="button" style='background-color: white; color: black;'>Fehér</a>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_off" role="button">Kikapcs</a>
-  <br>
-  <br>
-  <label>Fade speed: <input id="fadeSpeedInput" value="20"></label>
-  <a class="btn btn-secondary btn-lg" href="#" id="change_color_smooth" role="button" style='background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);'>Smooth</a>
-  </div>
+                <label><b>Password</b></label>
+                <input type="password" 
+                       placeholder="Enter Password" 
+                       name="password" required>
 
-  <br>
-  <h2>OLED kijelző</h2>
-  <label>Felirat: <input id="oledTextInput" value="Egy sor 10"></label>
-  <label>Betűméret: <input id="oledFontSizeInput" value="2"></label>
-  <button id="setOledTextButton">Küldés</button>
+                <button type="submit" id="loginButton">Login</button>
+                <!--<input type="checkbox" checked="checked">Remember me-->
+            </div>
 
-  <br>
-  <br>
-  <h4>Beépített kék LED</h4><label class="switch"><input type="checkbox" id="builtInBlueLedInput"><span class="slider"></span></label>
+            <div class="container" 
+                 style="background-color:#f1f1f1">
+                <button type="button" 
+                        onclick=
+                        "document.getElementById('id01').style.display='none'"
+                    class="cancelbtn">Cancel</button>
+            </div>
+        </form>
+    </div>
 
-  <br>
-  <br>
-  <button id="deepSleepInput">Deep sleep</button>
+	<div id="mainContent" style="display:none;">
+	  <h2>Relé(k) állítása</h2>
+	  <h4>Relé #1 - GPIO 25</h4><label class="switch"><input type="checkbox" id="relay1"><span class="slider"></span></label>
 
+	  <br>
+	  <br>
+	  <h2>DHT11 infók</h2>
+	  <p>
+		<i class="fas fa-thermometer-half" style="color:#059e8a;"></i> 
+		<span class="dht-labels">Hőmérséklet</span> 
+		<span id="temperature">N/A</span>
+		<span class="units">&deg;C</span>
+	  </p>
+	  <p>
+		<i class="fas fa-tint" style="color:#00add6;"></i> 
+		<span class="dht-labels">Páratartalom</span>
+		<span id="humidity">N/A</span>
+		<span class="units">&percnt;</span>
+	  </p>
+
+	  <br>
+	  <div class="container"><div class="row"><h2>RGB LED színválasztó</h2></div>
+	  <!--<input class="jscolor" id="colorPickerInput">-->
+	  <input class="jscolor {onFineChange:'updatePickerInputValue(this)'}" id="colorPickerInput">
+
+	  <br>
+	  <br>
+	  <a class="btn btn-secondary btn-lg" href="#" id="change_color_red" role="button" style='background-color: red;'>Piros</a>
+	  <a class="btn btn-secondary btn-lg" href="#" id="change_color_green" role="button" style='background-color: green;'>Zöld</a>
+	  <a class="btn btn-secondary btn-lg" href="#" id="change_color_blue" role="button" style='background-color: blue;'>Kék</a>
+	  <a class="btn btn-secondary btn-lg" href="#" id="change_color_yellow" role="button" style='background-color: yellow; color: black;'>Sárga</a>
+	  <a class="btn btn-secondary btn-lg" href="#" id="change_color_cyan" role="button" style='background-color: cyan; color: black;'>Cián</a>
+	  <a class="btn btn-secondary btn-lg" href="#" id="change_color_magenta" role="button" style='background-color: magenta;'>Magenta</a>
+	  <a class="btn btn-secondary btn-lg" href="#" id="change_color_white" role="button" style='background-color: white; color: black;'>Fehér</a>
+	  <a class="btn btn-secondary btn-lg" href="#" id="change_color_off" role="button">Kikapcs</a>
+	  <br>
+	  <br>
+	  <label>Fade speed: <input id="fadeSpeedInput" value="20"></label>
+	  <a class="btn btn-secondary btn-lg" href="#" id="change_color_smooth" role="button" style='background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);'>Smooth</a>
+	  </div>
+
+	  <br>
+	  <h2>OLED kijelző</h2>
+	  <label>Felirat: <input id="oledTextInput" value="Egy sor 10"></label>
+	  <label>Betűméret: <input id="oledFontSizeInput" value="2"></label>
+	  <button id="setOledTextButton">Küldés</button>
+
+	  <br>
+	  <br>
+	  <h4>Beépített kék LED</h4><label class="switch"><input type="checkbox" id="builtInBlueLedInput"><span class="slider"></span></label>
+
+	  <br>
+	  <br>
+	  <button id="deepSleepInput">Deep sleep</button>
+	</div>
+
+	<script>
+        let modal = document.getElementById('id01');
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
   <script type="module">
     function updatePickerInputValue(colorPicker) {
@@ -101,7 +148,8 @@
 		});
     }
 	
-	import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+	//import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+	import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 	// Import the functions you need from the SDKs you need
 	import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
@@ -125,8 +173,45 @@
 	const app = initializeApp(firebaseConfig);
 
 	const auth = getAuth();
-	await signInAnonymously(auth);
+	//await signInAnonymously(auth);
+	
+	document.getElementById("loginButton").addEventListener("click", async () =>
+	{
+		const email = document.getElementByName("email").value;
 
+		const password = document.getElementByName("password").value;
+
+		try
+		{
+			await signInWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
+
+			//alert("Sikeres bejelentkezés");
+		}
+		catch (error)
+		{
+			alert(error.message);
+		}
+	});
+	
+	onAuthStateChanged(auth, user =>
+	{
+		if (!user)
+		{
+			return;
+		}
+		
+		let modal = document.getElementById('id01');
+		modal.style.display = "none";
+		let loginBtn = document.getElementById('openLoginModalButton');
+		loginBtn.style.display = "none";
+		let mainContent = document.getElementById('mainContent');
+		mainContent.style.display = "block";
+	};
+	
 	const db = getDatabase(app);
 	
 	const snapshot =
