@@ -6,9 +6,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <style>
-	* {
-		text-align: center;
-	}
     html {font-family: Arial; display: inline-block; text-align: center;}
     h2 {font-size: 2.5rem;}
     p {font-size: 2.0rem;}
@@ -25,6 +22,8 @@
       vertical-align:middle;
       padding-bottom: 15px;
     }
+	#openLoginModalButton { text-align: center; }
+	.modal { text-align: center; }
   </style>
 </head>
 <body>
@@ -204,7 +203,7 @@
 	
 	onAuthStateChanged(auth, user =>
 	{
-		if (user)
+		if (auth.name != "[DEFAULT]")
 		{
 			//db = SetPageAfterLogin();
 			SetPageAfterLogin();
