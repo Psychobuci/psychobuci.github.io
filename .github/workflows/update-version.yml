@@ -6,11 +6,10 @@ on:
 jobs:
     update-version:
         runs-on: ubuntu-latest
+        env:
+            FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+            FIREBASE_APP_URL : ${{ secrets.FIREBASE_APP_URL }}
         steps:
-            - name: Update version
-              env:
-                FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-                FIREBASE_APP_URL : ${{ secrets.FIREBASE_APP_URL }}
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
             - run: npm install firebase-admin
