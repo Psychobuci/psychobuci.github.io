@@ -220,7 +220,7 @@
 		let mainContent = document.getElementById('mainContent');
 		mainContent.style.display = "block";
 		
-		const db = getDatabase(app);
+		db = getDatabase(app);
 	
 		const snapshot = await get(ref(db, "websiteVersion"));
 
