@@ -88,6 +88,8 @@
 
 		sendColor(r, g, b);
     }
+	window.updatePickerInputValue = updatePickerInputValue; // globálissá tesszük a függvényt
+	
     function sendColor(r, g, b) {
 		update(ref(db, "devices/esp32_01/rgb"),
 		{
