@@ -224,10 +224,10 @@
 	
 		let CURRENT_VERSION = null;
 		
-		(async () => {
+		/*(async () => {
 			let snapshot = await get(ref(db, "websiteVersion"));
 			CURRENT_VERSION = snapshot.val();
-		})();
+		})();*/
 	  
 		const deviceRef = ref(db, "devices/esp32_01");
 		
@@ -343,8 +343,11 @@
 		(snapshot) =>
 		{
 			const latestVersion = snapshot.val();
-
-			if (latestVersion > CURRENT_VERSION)
+			if (CURRENT_VERSION == null)
+			{
+				CURRENT_VERSION = latestVersion;
+			}
+			else if (latestVersion > CURRENT_VERSION)
 			{
 				if (confirm("Új verzió érhető el. Újratöltöd az oldalt?"))
 				{
