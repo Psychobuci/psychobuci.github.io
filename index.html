@@ -204,13 +204,11 @@
 	
 	onAuthStateChanged(auth, user =>
 	{
-		if (!user)
+		if (user)
 		{
-			return;
+			//db = SetPageAfterLogin();
+			SetPageAfterLogin();
 		}
-		
-		//db = SetPageAfterLogin();
-		SetPageAfterLogin();
 	});
 	
 	function SetPageAfterLogin() {
