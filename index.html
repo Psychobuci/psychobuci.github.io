@@ -178,6 +178,8 @@
 	const auth = getAuth();
 	//await signInAnonymously(auth);
 	
+	const db;
+	
 	document.getElementById("loginButton").addEventListener("click", async () =>
 	{
 		const email = document.getElementByName("email").value;
@@ -207,144 +209,147 @@
 			return;
 		}
 		
+		db = SetPageAfterLogin();
+	});
+	
+	function SetPageAfterLogin() {
 		let modal = document.getElementById('id01');
 		modal.style.display = "none";
 		let loginBtn = document.getElementById('openLoginModalButton');
 		loginBtn.style.display = "none";
 		let mainContent = document.getElementById('mainContent');
 		mainContent.style.display = "block";
-	});
-	
-	const db = getDatabase(app);
-	
-	const snapshot =
-    await get(ref(db, "websiteVersion"));
-
-	const CURRENT_VERSION = snapshot.val();
-  
-	const deviceRef = ref(db, "devices/esp32_01");
-	
-	// reseteljük a deepSleep értékét
-	update(ref(db, "devices/esp32_01"),
-	{
-		deepSleep: false
-	});
-	
-	onValue(deviceRef, (snapshot) =>
-	{
-		const data = snapshot.val();
-		document.getElementById("relay1").checked = data.relay;
-		document.getElementById("temperature").textContent = data.temperature - 1.5; // másik hőmérő által úgy látszik, hogy túl sokat mér
-		document.getElementById("humidity").textContent = data.humidity;
-		document.getElementById("builtInBlueLedInput").checked = data.builtInBlueLed;
-	});
-  
-	document.getElementById("relay1").onchange = (event) =>
-	{
-		let state = event.target.checked;
-		update(ref(db, "devices/esp32_01"),
-		{
-			relay: state
-		});
-	};
-
-	document.getElementById("builtInBlueLedInput").onchange = (event) =>
-	{
-		let state = event.target.checked;
-		update(ref(db, "devices/esp32_01"),
-		{
-			builtInBlueLed: state
-		});
-	};
-
-	document.getElementById("change_color_red").onclick = () =>
-	{
-		sendColor(255, 0, 0);
-	};
-	document.getElementById("change_color_green").onclick = () =>
-	{
-		sendColor(0, 255, 0);
-	};
-	document.getElementById("change_color_blue").onclick = () =>
-	{
-		sendColor(0, 0, 255);
-	};
-	document.getElementById("change_color_yellow").onclick = () =>
-	{
-		sendColor(255, 255, 0);
-	};
-	document.getElementById("change_color_cyan").onclick = () =>
-	{
-		sendColor(0, 255, 255);
-	};
-	document.getElementById("change_color_magenta").onclick = () =>
-	{
-		sendColor(255, 0, 255);
-	};
-	document.getElementById("change_color_white").onclick = () =>
-	{
-		sendColor(255, 255, 255);
-	};
-	document.getElementById("change_color_off").onclick = () =>
-	{
-		sendColor(0, 0, 0);
-	};
-
-	document.getElementById("change_color_smooth").onclick = () =>
-	{
-		const fadeSpeedInput = document.getElementById('fadeSpeedInput');
-		let fadeSpeed = fadeSpeedInput.value;
-		update(ref(db, "devices/esp32_01/rgbAnimation"),
-		{
-			fadeSpeed: fadeSpeed,
-			timestamp: Date.now()
-		});
-		/*update(ref(db, "devices/esp32_01"),
-		{
-			rgbAnimation: fadeSpeed
-		});*/
-	};
-	
-	document.getElementById("setOledTextButton").onclick = () =>
-	{
-		const oledTextInput = document.getElementById('oledTextInput');
-		let oledText = oledTextInput.value;
-		const oledFontSizeInput = document.getElementById('oledFontSizeInput');
-		let oledFontSize = oledFontSizeInput.value;
 		
-		update(ref(db, "devices/esp32_01/oled"),
-		{
-			text: oledText,
-			fontSize: oledFontSize,
-			timestamp: Date.now()
-		});
-	};
+		const db = getDatabase(app);
+	
+		const snapshot = await get(ref(db, "websiteVersion"));
 
-	document.getElementById("deepSleepInput").onclick = () =>
-	{
-		if (!confirm("Biztos, hogy elaltatod az eszközt?"))
-		{
-			return;
-		}
+		const CURRENT_VERSION = snapshot.val();
+	  
+		const deviceRef = ref(db, "devices/esp32_01");
+		
+		// reseteljük a deepSleep értékét
 		update(ref(db, "devices/esp32_01"),
 		{
-			deepSleep: true
+			deepSleep: false
 		});
-	};
-	
-	onValue(ref(db, "websiteVersion"),
-    (snapshot) =>
-    {
-        const latestVersion = snapshot.val();
-
-        if (latestVersion > CURRENT_VERSION)
-        {
-            if (confirm("Új verzió érhető el. Újratöltöd az oldalt?"))
+		
+		onValue(deviceRef, (snapshot) =>
+		{
+			const data = snapshot.val();
+			document.getElementById("relay1").checked = data.relay;
+			document.getElementById("temperature").textContent = data.temperature - 1.5; // másik hőmérő által úgy látszik, hogy túl sokat mér
+			document.getElementById("humidity").textContent = data.humidity;
+			document.getElementById("builtInBlueLedInput").checked = data.builtInBlueLed;
+		});
+	  
+		document.getElementById("relay1").onchange = (event) =>
+		{
+			let state = event.target.checked;
+			update(ref(db, "devices/esp32_01"),
 			{
-				location.reload(true);
+				relay: state
+			});
+		};
+
+		document.getElementById("builtInBlueLedInput").onchange = (event) =>
+		{
+			let state = event.target.checked;
+			update(ref(db, "devices/esp32_01"),
+			{
+				builtInBlueLed: state
+			});
+		};
+
+		document.getElementById("change_color_red").onclick = () =>
+		{
+			sendColor(255, 0, 0);
+		};
+		document.getElementById("change_color_green").onclick = () =>
+		{
+			sendColor(0, 255, 0);
+		};
+		document.getElementById("change_color_blue").onclick = () =>
+		{
+			sendColor(0, 0, 255);
+		};
+		document.getElementById("change_color_yellow").onclick = () =>
+		{
+			sendColor(255, 255, 0);
+		};
+		document.getElementById("change_color_cyan").onclick = () =>
+		{
+			sendColor(0, 255, 255);
+		};
+		document.getElementById("change_color_magenta").onclick = () =>
+		{
+			sendColor(255, 0, 255);
+		};
+		document.getElementById("change_color_white").onclick = () =>
+		{
+			sendColor(255, 255, 255);
+		};
+		document.getElementById("change_color_off").onclick = () =>
+		{
+			sendColor(0, 0, 0);
+		};
+
+		document.getElementById("change_color_smooth").onclick = () =>
+		{
+			const fadeSpeedInput = document.getElementById('fadeSpeedInput');
+			let fadeSpeed = fadeSpeedInput.value;
+			update(ref(db, "devices/esp32_01/rgbAnimation"),
+			{
+				fadeSpeed: fadeSpeed,
+				timestamp: Date.now()
+			});
+			/*update(ref(db, "devices/esp32_01"),
+			{
+				rgbAnimation: fadeSpeed
+			});*/
+		};
+		
+		document.getElementById("setOledTextButton").onclick = () =>
+		{
+			const oledTextInput = document.getElementById('oledTextInput');
+			let oledText = oledTextInput.value;
+			const oledFontSizeInput = document.getElementById('oledFontSizeInput');
+			let oledFontSize = oledFontSizeInput.value;
+			
+			update(ref(db, "devices/esp32_01/oled"),
+			{
+				text: oledText,
+				fontSize: oledFontSize,
+				timestamp: Date.now()
+			});
+		};
+
+		document.getElementById("deepSleepInput").onclick = () =>
+		{
+			if (!confirm("Biztos, hogy elaltatod az eszközt?"))
+			{
+				return;
 			}
-        }
-    }
+			update(ref(db, "devices/esp32_01"),
+			{
+				deepSleep: true
+			});
+		};
+		
+		onValue(ref(db, "websiteVersion"),
+		(snapshot) =>
+		{
+			const latestVersion = snapshot.val();
+
+			if (latestVersion > CURRENT_VERSION)
+			{
+				if (confirm("Új verzió érhető el. Újratöltöd az oldalt?"))
+				{
+					location.reload(true);
+				}
+			}
+		}
+	}
 );
 </script>
 </body>
