@@ -209,8 +209,8 @@
 	function SetPageAfterLogin() {
 		let modal = document.getElementById('id01');
 		modal.style.display = "none";
-		let loginBtn = document.getElementById('openLoginModalButton');
-		loginBtn.style.display = "none";
+		//let loginBtn = document.getElementById('openLoginModalButton');
+		//loginBtn.style.display = "none";
 		let mainContent = document.getElementById('mainContent');
 		mainContent.style.display = "block";
 		
@@ -221,10 +221,10 @@
 		const deviceRef = ref(db, "devices/esp32_01");
 		
 		// reseteljük a deepSleep értékét
-		update(ref(db, "devices/esp32_01"),
+		/*update(ref(db, "devices/esp32_01"),
 		{
 			deepSleep: false
-		});
+		});*/
 		
 		onValue(deviceRef, (snapshot) =>
 		{
