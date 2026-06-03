@@ -87,7 +87,6 @@
 
 	  <br>
 	  <div class="container"><div class="row"><h2>RGB LED színválasztó</h2></div>
-	  <!--<input class="jscolor" id="colorPickerInput">-->
 	  <input class="jscolor {onFineChange:'updatePickerInputValue(this)'}" id="colorPickerInput">
 
 	  <br>
@@ -143,7 +142,6 @@
     function sendColor(r, g, b) {
 		update(ref(db, "devices/esp32_01/rgb"),
 		{
-			//rgbValues: r + ", " + g + ", " + b,
 			r: r,
 			g: g,
 			b: b,
@@ -193,8 +191,6 @@
 				email,
 				password
 			);
-
-			//alert("Sikeres bejelentkezés");
 		}
 		catch (error)
 		{
@@ -204,10 +200,8 @@
 	
 	onAuthStateChanged(auth, user =>
 	{
-		//if (auth.name != "[DEFAULT]")
 		if (auth.currentUser.accessToken.length > 0)
 		{
-			//db = SetPageAfterLogin();
 			SetPageAfterLogin();
 		}
 	});
@@ -223,11 +217,6 @@
 		db = getDatabase(app);
 	
 		let CURRENT_VERSION = null;
-		
-		/*(async () => {
-			let snapshot = await get(ref(db, "websiteVersion"));
-			CURRENT_VERSION = snapshot.val();
-		})();*/
 	  
 		const deviceRef = ref(db, "devices/esp32_01");
 		
@@ -355,8 +344,6 @@
 				}
 			}
 		});
-		
-		//return db;
 	}
 </script>
 </body>
