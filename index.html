@@ -132,6 +132,47 @@
                 modal.style.display = "none";
             }
         }
+		
+		if (Notification.permission !== "granted") {
+			await Notification.requestPermission();
+		}
+
+		let updateAvailable = false;
+
+		function showUpdateModal() {
+			const shouldReload = confirm(
+				"Új verzió érhető el. Frissíted az oldalt?"
+			);
+
+			if (shouldReload) {
+				location.reload(true);
+			}
+		}
+		
+		function onWebsiteVersionChanged() {
+			updateAvailable = true;
+
+			if (document.hidden) {
+				if (Notification.permission === "granted") {
+					new Notification(
+						"ESP32 Controller",
+						{
+							body: "Új verzió érhető el."
+						}
+					);
+				}
+			}
+			else {
+				showUpdateModal();
+			}
+		}
+		
+		document.addEventListener("visibilitychange", () => {
+			if (!document.hidden && updateAvailable) {
+				//updateAvailable = false;
+				showUpdateModal();
+			}
+		});
     </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
   <script type="module">
@@ -309,13 +350,14 @@
 				CURRENT_VERSION = latestVersion;
 			}
 			else if (latestVersion > CURRENT_VERSION) {
-				if (confirm("Új verzió érhető el. Újratöltöd az oldalt?")) {
+				/*if (confirm("Új verzió érhető el. Újratöltöd az oldalt?")) {
 					location.reload(true);
-				}
+				}*/
+				onWebsiteVersionChanged();
 			}
 		});
 		
-		const connectedRef = ref(db, ".info/connected");
+		/*const connectedRef = ref(db, ".info/connected");
 
 		onValue(connectedRef, async (snap) => {
 			if (snap.val() === true) {
@@ -329,7 +371,7 @@
 					}
 				}
 			}
-		});
+		});*/
 	}
 </script>
 </body>
