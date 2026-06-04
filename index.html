@@ -134,7 +134,7 @@
         }
 		
 		if (Notification.permission !== "granted") {
-			await Notification.requestPermission();
+			Notification.requestPermission();
 		}
 
 		let updateAvailable = false;
@@ -173,6 +173,18 @@
 				showUpdateModal();
 			}
 		});
+		
+		/*async function initialize()
+		{
+			if (Notification.permission !== "granted")
+			{
+				await Notification.requestPermission();
+			}
+
+			// további inicializálás...
+		}
+
+		initialize();*/
     </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
   <script type="module">
