@@ -113,6 +113,11 @@
 
 	  <br>
 	  <br>
+	  <h2>NFC kártyaolvasó utoljára kiolvasott szövege:</h2>
+	  <label id="nfcCardText"></label>
+	  
+	  <br>
+	  <br>
 	  <h4>Beépített kék LED</h4><label class="switch"><input type="checkbox" id="builtInBlueLedInput"><span class="slider"></span></label>
 
 	  <br>
@@ -224,6 +229,7 @@
 			document.getElementById("temperature").textContent = data.temperature - 1.5; // másik hőmérő által úgy látszik, hogy túl sokat mér
 			document.getElementById("humidity").textContent = data.humidity;
 			document.getElementById("builtInBlueLedInput").checked = data.builtInBlueLed;
+			document.getElementById("nfcCardText").textContent = data.nfcCardText;
 		});
 	  
 		document.getElementById("relay1").onchange = (event) => {
