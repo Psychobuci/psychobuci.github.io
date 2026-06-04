@@ -198,10 +198,8 @@
 		}
 	});
 	
-	onAuthStateChanged(auth, user =>
-	{
-		if (auth.currentUser.accessToken.length > 0)
-		{
+	onAuthStateChanged(auth, user => {
+		if (auth.currentUser.accessToken.length > 0) {
 			SetPageAfterLogin();
 		}
 	});
@@ -220,14 +218,7 @@
 	  
 		const deviceRef = ref(db, "devices/esp32_01");
 		
-		// reseteljük a deepSleep értékét
-		/*update(ref(db, "devices/esp32_01"),
-		{
-			deepSleep: false
-		});*/
-		
-		onValue(deviceRef, (snapshot) =>
-		{
+		onValue(deviceRef, (snapshot) => {
 			const data = snapshot.val();
 			document.getElementById("relay1").checked = data.relay;
 			document.getElementById("temperature").textContent = data.temperature - 1.5; // másik hőmérő által úgy látszik, hogy túl sokat mér
@@ -235,74 +226,55 @@
 			document.getElementById("builtInBlueLedInput").checked = data.builtInBlueLed;
 		});
 	  
-		document.getElementById("relay1").onchange = (event) =>
-		{
+		document.getElementById("relay1").onchange = (event) => {
 			let state = event.target.checked;
-			update(ref(db, "devices/esp32_01"),
-			{
+			update(ref(db, "devices/esp32_01"), {
 				relay: state
 			});
 		};
 
-		document.getElementById("builtInBlueLedInput").onchange = (event) =>
-		{
+		document.getElementById("builtInBlueLedInput").onchange = (event) => {
 			let state = event.target.checked;
-			update(ref(db, "devices/esp32_01"),
-			{
+			update(ref(db, "devices/esp32_01"), {
 				builtInBlueLed: state
 			});
 		};
 
-		document.getElementById("change_color_red").onclick = () =>
-		{
+		document.getElementById("change_color_red").onclick = () => {
 			sendColor(255, 0, 0);
 		};
-		document.getElementById("change_color_green").onclick = () =>
-		{
+		document.getElementById("change_color_green").onclick = () => {
 			sendColor(0, 255, 0);
 		};
-		document.getElementById("change_color_blue").onclick = () =>
-		{
+		document.getElementById("change_color_blue").onclick = () => {
 			sendColor(0, 0, 255);
 		};
-		document.getElementById("change_color_yellow").onclick = () =>
-		{
+		document.getElementById("change_color_yellow").onclick = () => {
 			sendColor(255, 255, 0);
 		};
-		document.getElementById("change_color_cyan").onclick = () =>
-		{
+		document.getElementById("change_color_cyan").onclick = () => {
 			sendColor(0, 255, 255);
 		};
-		document.getElementById("change_color_magenta").onclick = () =>
-		{
+		document.getElementById("change_color_magenta").onclick = () => {
 			sendColor(255, 0, 255);
 		};
-		document.getElementById("change_color_white").onclick = () =>
-		{
+		document.getElementById("change_color_white").onclick = () => {
 			sendColor(255, 255, 255);
 		};
-		document.getElementById("change_color_off").onclick = () =>
-		{
+		document.getElementById("change_color_off").onclick = () => {
 			sendColor(0, 0, 0);
 		};
 
-		document.getElementById("change_color_smooth").onclick = () =>
-		{
+		document.getElementById("change_color_smooth").onclick = () => {
 			const fadeSpeedInput = document.getElementById('fadeSpeedInput');
 			let fadeSpeed = fadeSpeedInput.value;
-			update(ref(db, "devices/esp32_01/rgbAnimation"),
-			{
+			update(ref(db, "devices/esp32_01/rgbAnimation"), {
 				fadeSpeed: fadeSpeed,
 				timestamp: Date.now()
 			});
-			/*update(ref(db, "devices/esp32_01"),
-			{
-				rgbAnimation: fadeSpeed
-			});*/
 		};
 		
-		document.getElementById("setOledTextButton").onclick = () =>
-		{
+		document.getElementById("setOledTextButton").onclick = () => {
 			const oledTextInput = document.getElementById('oledTextInput');
 			let oledText = oledTextInput.value;
 			const oledFontSizeInput = document.getElementById('oledFontSizeInput');
@@ -316,14 +288,11 @@
 			});
 		};
 
-		document.getElementById("deepSleepInput").onclick = () =>
-		{
-			if (!confirm("Biztos, hogy elaltatod az eszközt?"))
-			{
+		document.getElementById("deepSleepInput").onclick = () => {
+			if (!confirm("Biztos, hogy elaltatod az eszközt?")) {
 				return;
 			}
-			update(ref(db, "devices/esp32_01"),
-			{
+			update(ref(db, "devices/esp32_01"), {
 				deepSleep: true
 			});
 		};
